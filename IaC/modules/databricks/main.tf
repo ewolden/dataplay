@@ -3,22 +3,29 @@ provider "azurerm" {
   features {}
 }
 
+data "template_file" "init_script" {
+  template = file("${path.module}/mount-azure-datalake-gen2.sh")  # rename your script file appropriately
+
+  vars = {
+    storage_account_name = var.storage_account_name
+    filesystem_name      = var.filesystem_name  
+    mount_name           = var.mount_name  
+    scope_name           = var.scope_name  
+    key_client_id        = var.key_client_id  
+    key_client_secret    = var.key_client_secret  
+  }
+}
+
 # Configure Databricks provider
 provider "databricks" {
   azure_workspace_resource_id = azurerm_databricks_workspace.this.id
 }
 
-# Create an Azure Resource Group
-resource "azurerm_resource_group" "this" {
-  name     = var.resource_group_name
-  location = var.location
-}
-
 # Create an Azure Databricks workspace
 resource "azurerm_databricks_workspace" "this" {
   name                        = var.workspace_name
-  resource_group_name         = azurerm_resource_group.this.name
-  location                    = azurerm_resource_group.this.location
+  resource_group_name         = var.resource_group_name
+  location                    = var.location
   sku                         = var.workspace_sku
   managed_resource_group_name = var.managed_resource_group_name
 }
@@ -53,14 +60,12 @@ resource "databricks_cluster" "this" {
     spot_bid_max_price = var.spot_bid_max_price
   }
 
-  # Mount an NFS storage
-  cluster_mount_info {
-    network_filesystem_info {
-      server_address = var.server_address
-      mount_options  = var.mount_options
+  // Init script to mount Azure Blob Storage
+  init_scripts {
+    dbfs = {
+      destination = "dbfs:/databricks/init-scripts/mount-azure-datalake-gen2.sh"
     }
-    remote_mount_dir_path = var.remote_mount_dir_path
-    local_mount_dir_path  = var.local_mount_dir_path
+    source = "mount-azure-datalake-gen2.sh"
   }
 
   # Configure allowed workloads

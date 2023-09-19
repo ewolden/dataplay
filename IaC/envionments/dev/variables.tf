@@ -193,3 +193,37 @@ variable "container_access_type" {
   type        = string
   default     = "private"
 }
+
+# Data Lake Gen2 specific settings
+variable "filesystem_name" {
+  type        = string
+  description = "Name of the filesystem in the Azure Data Lake Storage Gen2 account."
+}
+
+variable "mount_name" {
+  type        = string
+  description = "Name of the mount point in Databricks."
+}
+
+# Databricks Secret Scope and Key Names for storing service principal details
+variable "scope_name" {
+  type        = string
+  description = "Name of the Databricks secret scope."
+}
+
+variable "key_client_id" {
+  type        = string
+  description = "Key name in Databricks secret scope for the service principal client ID."
+}
+
+variable "key_client_secret" {
+  type        = string
+  description = "Key name in Databricks secret scope for the service principal client secret."
+}
+
+# Optional: If you hardcode the tenant_id in the script, you don't need this variable.
+# Otherwise, you can use this variable to replace it dynamically.
+variable "tenant_id" {
+  type        = string
+  description = "Azure Tenant ID for OAuth authentication."
+}

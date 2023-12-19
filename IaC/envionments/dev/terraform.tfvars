@@ -6,6 +6,7 @@ is_hns_enabled            = true
 storage_container_name = "mycontainer"  # Name of the container in the Storage Account
 container_access_type   = "private"
 
+
 # Azure Resource Group settings
 resource_group_name        = "Dataplay"  # Name of the Azure Resource Group. Must be unique within the Azure subscription.
 location                   = "West Europe"  # Azure region where resources will be created, e.g., "East US", "West Europe", etc.

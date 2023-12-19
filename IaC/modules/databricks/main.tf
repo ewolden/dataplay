@@ -1,4 +1,16 @@
-# Configure Azure provider
+variable "databricks_connection_profile" {}
+
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+    }
+    databricks = {
+      source = "databricks/databricks"
+    }
+  }
+}
+
 provider "azurerm" {
   features {}
 }
@@ -16,9 +28,9 @@ data "template_file" "init_script" {
   }
 }
 
-# Configure Databricks provider
+# Use Databricks CLI authentication.
 provider "databricks" {
-  azure_workspace_resource_id = azurerm_databricks_workspace.this.id
+  profile = var.databricks_connection_profile
 }
 
 # Create an Azure Databricks workspace

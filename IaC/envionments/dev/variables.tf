@@ -4,11 +4,6 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "location" {
-  description = "The location of the Azure Resource Group"
-  type        = string
-}
-
 # Variables for Data Factory
 variable "data_factory_name" {
   description = "The name of the Azure Data Factory"
@@ -40,17 +35,6 @@ variable "github_root_folder" {
   description = "Specifies the root folder within the GitHub repository"
   type        = string
   default     = "/"
-}
-
-# Azure Resource Group settings
-variable "resource_group_name" {
-  type        = string
-  description = "The name of the Azure Resource Group."
-}
-
-variable "location" {
-  type        = string
-  description = "The Azure location where resources will be created."
 }
 
 # Databricks workspace settings
@@ -134,34 +118,6 @@ variable "name" {
   type        = string
 }
 
-# Azure location
-variable "location" {
-  description = "The Azure location where the resource group should be created"
-  type        = string
-}
-
-
-# Resource group name
-variable "resource_group_name" {
-  description = "The name of the resource group."
-  type        = string
-  default     = "example-resources"
-}
-
-# Azure location
-variable "location" {
-  description = "Azure location for the resources."
-  type        = string
-  default     = "East US"
-}
-
-# Storage account name
-variable "storage_account_name" {
-  description = "The name of the storage account."
-  type        = string
-  default     = "examplestoracc"
-}
-
 # Storage account tier
 variable "account_tier" {
   description = "The tier to use for this storage account."
@@ -181,11 +137,6 @@ variable "is_hns_enabled" {
   description = "Is Hierarchical Namespace enabled?"
   type        = bool
   default     = true
-}
-
-variable "storage_container_name" {
-  description = "The name of the storage container."
-  type        = string
 }
 
 variable "container_access_type" {

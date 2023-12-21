@@ -1,7 +1,7 @@
 # Include the Resource Group module
 module "resource_group" {
   source              = "../../modules/resource_group"
-  name                = module.resource_group.resource_group_name
+  name                = var.resource_group_name
   location            = var.location
 }
 
@@ -27,7 +27,7 @@ module "data_factory" {
   # Parameters for the Data Factory module, loaded from tfvars.
   data_factory_name      = var.data_factory_name
   location               = var.location
-  resource_group_name    = var.resource_group_name
+  resource_group_name    = module.resource_group.resource_group_name
   github_account_name    = var.github_account_name
   github_branch_name     = var.github_branch_name
   github_git_url         = var.github_git_url
@@ -38,8 +38,13 @@ module "data_factory" {
 
 # Import the Databricks module
 module "databricks_setup" {
-  source = "../../modules/databricks"  # The relative path to the module directory
+  source = "../../modules/databricks_setup"  # The relative path to the module directory
 
+  #Secrets
+  key_client_id = var.client_id
+  key_client_secret = var.client_secret
+  tenant_id = var.tenant_id
+  
   # Azure Resource Group settings
   resource_group_name        = module.resource_group.resource_group_name
   location                   = var.location
@@ -48,6 +53,9 @@ module "databricks_setup" {
   workspace_name             = var.workspace_name
   workspace_sku              = var.workspace_sku
   managed_resource_group_name= var.managed_resource_group_name
+  filesystem_name            = var.filesystem_name
+  mount_name                 = var.mount_name
+  scope_name = var.scope_name
 
   # Databricks cluster settings
   cluster_name               = var.cluster_name
@@ -67,3 +75,43 @@ module "databricks_setup" {
   allow_jobs                 = var.allow_jobs
   allow_notebooks            = var.allow_notebooks
 }
+
+# module "databricks_resource" {
+#   source = "../../modules/databricks_resource"  # The relative path to the module directory
+
+#   #Secrets
+#   key_client_id = var.client_id
+#   key_client_secret = var.client_secret
+#   tenant_id = var.tenant_id
+#   databricks_host = module.databricks_setup.workspace_url
+  
+#   # Azure Resource Group settings
+#   resource_group_name        = module.resource_group.resource_group_name
+#   location                   = var.location
+
+#   # Databricks workspace settings
+#   workspace_name             = var.workspace_name
+#   workspace_sku              = var.workspace_sku
+#   managed_resource_group_name= var.managed_resource_group_name
+#   filesystem_name            = var.filesystem_name
+#   mount_name                 = var.mount_name
+#   scope_name = var.scope_name
+
+#   # Databricks cluster settings
+#   cluster_name               = var.cluster_name
+#   autotermination_minutes    = var.autotermination_minutes
+#   min_workers                = var.min_workers
+#   max_workers                = var.max_workers
+
+#   # Azure specific cluster settings
+#   availability               = var.availability
+#   first_on_demand            = var.first_on_demand
+#   spot_bid_max_price         = var.spot_bid_max_price
+
+#   storage_account_name = var.storage_account_name
+#   storage_container_name = var.storage_container_name
+
+#   # Workload settings
+#   allow_jobs                 = var.allow_jobs
+#   allow_notebooks            = var.allow_notebooks
+# }

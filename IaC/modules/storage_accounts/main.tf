@@ -1,9 +1,13 @@
+provider "azurerm" {
+  features {}
+}
+
 # Storage account configuration
 resource "azurerm_storage_account" "this" {
   # Name, resource group, and location for the storage account
   name                     = var.storage_account_name
-  resource_group_name      = azurerm_resource_group.this.name
-  location                 = azurerm_resource_group.this.location
+  resource_group_name      = var.resource_group_name
+  location                 = var.location
 
   # Storage account tier and replication type
   account_tier             = var.account_tier

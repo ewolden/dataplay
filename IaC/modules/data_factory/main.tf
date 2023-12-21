@@ -1,3 +1,7 @@
+provider "azurerm" {
+  features {}
+}
+
 # Create a Data Factory
 resource "azurerm_data_factory" "example" {
   name                = var.data_factory_name

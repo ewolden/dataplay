@@ -1,40 +1,12 @@
-# Variables for Resource Group
+# Azure Resource Group settings
 variable "resource_group_name" {
-  description = "The name of the Azure Resource Group"
   type        = string
+  description = "The name of the Azure Resource Group."
 }
 
-# Variables for Data Factory
-variable "data_factory_name" {
-  description = "The name of the Azure Data Factory"
+variable "location" {
   type        = string
-}
-
-# Variables for GitHub Configuration
-variable "github_account_name" {
-  description = "Specifies the GitHub account name"
-  type        = string
-}
-
-variable "github_branch_name" {
-  description = "Specifies the branch of the GitHub repository to get code from"
-  type        = string
-}
-
-variable "github_git_url" {
-  description = "Specifies the GitHub Enterprise host name"
-  type        = string
-}
-
-variable "github_repository_name" {
-  description = "Specifies the name of the GitHub repository"
-  type        = string
-}
-
-variable "github_root_folder" {
-  description = "Specifies the root folder within the GitHub repository"
-  type        = string
-  default     = "/"
+  description = "The Azure location where resources will be created."
 }
 
 # Databricks workspace settings
@@ -110,39 +82,6 @@ variable "allow_jobs" {
 variable "allow_notebooks" {
   type        = bool
   description = "Flag to enable or disable running Databricks notebooks."
-}
-
-# Resource Group name
-variable "name" {
-  description = "The name of the resource group"
-  type        = string
-}
-
-# Storage account tier
-variable "account_tier" {
-  description = "The tier to use for this storage account."
-  type        = string
-  default     = "Standard"
-}
-
-# Storage account replication type
-variable "account_replication_type" {
-  description = "The replication type for this storage account."
-  type        = string
-  default     = "LRS"
-}
-
-# Enable Hierarchical Namespace
-variable "is_hns_enabled" {
-  description = "Is Hierarchical Namespace enabled?"
-  type        = bool
-  default     = true
-}
-
-variable "container_access_type" {
-  description = "The access level configured for the container."
-  type        = string
-  default     = "private"
 }
 
 # Data Lake Gen2 specific settings

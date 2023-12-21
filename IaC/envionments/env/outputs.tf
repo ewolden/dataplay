@@ -12,5 +12,5 @@ output "data_factory_id" {
 
 # Output the Databricks Workspace URL
 output "workspace_url" {
-  value = module.databricks.this.workspace_url
+  value = module.databricks_setup.workspace_url
 }
